@@ -3,6 +3,7 @@
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.*;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.display.Graphics;
@@ -11,16 +12,12 @@
 	
 	[SWF(width="800",height="600",frameRate=60)]
 	public class Main extends Sprite {
-		
+		private var collisionHull2:Rectangle;
 		private var canvas:BitmapData;
 		private var zeroPoint:Point = new Point;
 		private var coreTree:Tree = new Tree;
-		private var PlayerCharacter:GameObject;
-		private var collisionHull1:Rectangle;
-		private var collisionHull2:Rectangle;
+		private var PlayerCharacter:Player;
 		private var ct:Number = 0;
-		private var xShiftWorld:Number = 0;
-		private var yShiftWorld:Number = 0;
 		
 		public function Main() {
 			canvas = new BitmapData(800,600,false);
@@ -32,9 +29,22 @@
 				makeObject(0, i2*50-50, 600);
 			}
 			makeObject(1, 650, 483);
-			addChild( new Stats() );
+
 			addEventListener(Event.ENTER_FRAME, loop);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyPressed);
+			addChild( new Stats() );
 		}
+		
+		private function keyPressed(evt:KeyboardEvent):void{
+			switch(evt.keyCode){
+				case 32: //left key
+					PlayerCharacter.jump();
+				break;
+			}
+		}
+		
+		
+		
 		protected function makeObject(ID:Number, _x:Number, _y:Number):void {
 			if (ID == 1) {
 				var character:Player = new Player(canvas);

@@ -20,7 +20,6 @@ package
 		private var onGround:Boolean = false;
 		private var yShift:Number = 0;
 		private var weight:Number = 0;
-		private var speed:Number;
 		private var xShift:Number = 0;
 		
 		public var animate:Boolean;
@@ -34,21 +33,16 @@ package
 		}
 		public function render():void {
 			if (active) {
-				transform();	
+				act();
+				move();
 			}
 			draw();
 		}
-		
-		public function transform():void{
-			if (state == "IDLE") {
-				yShift += weight;
-			}if (state == "RESET") {
-				if (x < -50) {
-					x = 850;
-				}
-			}
-			y += yShift;
+		public function act():void{
+		}
+		public function move():void{
 			x += xShift;
+			y += yShift;
 		}
 		
 		private function draw():void{
@@ -61,11 +55,20 @@ package
 			count++;
 		}
 		
+		public function setShift(x:Number, y:Number):void {
+			if (x != .1) {
+				xShift = x;
+			}
+			if (y != .1) {
+				yShift = y;
+				trace(yShift);
+			}
+		}
 		public function getShift(type:Boolean):Number {
 			if (type) {
-				return yShift;
-			}else {
 				return xShift;
+			}else {
+				return yShift;
 			}
 		}
 		
@@ -75,11 +78,6 @@ package
 			}else {
 				active = false;
 			}
-		}
-		
-		public function setShift(x:Number,y:Number):void {
-			xShift = x;
-			yShift = y;
 		}
 		
 		public function setAttributes(state:String, anim:Boolean, b:BitmapData , r:Array):void {
@@ -95,6 +93,6 @@ package
 			rects = animation
 			animIndex = frame
 		}
+		
 	}
-
 }

@@ -12,8 +12,12 @@ package
 			super(_canvas);
 			setAttributes("RESET",false, R.block, [R.graphic_block]);
 			setActive(true);
-			setShift(-10, 0);
-
+			setShift(-5, 0);
+		}
+		override public function act():void{
+			if (x < -50) {
+				x = 850;
+			}
 		}
 	}
 }
